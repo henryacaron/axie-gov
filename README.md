@@ -1,2 +1,1 @@
-# axie_gov
-Axie Governance
+# Axie Decentralized Governance
