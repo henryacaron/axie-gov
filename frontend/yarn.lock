@@ -762,6 +762,13 @@
   "resolved" "https://registry.npmjs.org/@types/node/-/node-12.20.38.tgz"
   "version" "12.20.38"
 
+"@types/papaparse@^5.3.1":
+  "integrity" "sha512-1lbngk9wty2kCyQB42LjqSa12SEop3t9wcEC7/xYr3ujTSTmv7HWKjKYXly0GkMfQ42PRb2lFPFEibDOiMXS0g=="
+  "resolved" "https://registry.npmjs.org/@types/papaparse/-/papaparse-5.3.1.tgz"
+  "version" "5.3.1"
+  dependencies:
+    "@types/node" "*"
+
 "@types/pbkdf2@^3.0.0":
   "integrity" "sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ=="
   "resolved" "https://registry.npmjs.org/@types/pbkdf2/-/pbkdf2-3.1.0.tgz"
@@ -2458,7 +2465,7 @@
   "resolved" "https://registry.npmjs.org/exit-on-epipe/-/exit-on-epipe-1.0.1.tgz"
   "version" "1.0.1"
 
-"express@^4.14.0":
+"express@^4.14.0", "express@^4.17.2":
   "integrity" "sha512-oxlxJxcQlYwqPWKVJJtvQiwHgosH/LrLSPA+H4UxpyvSS6jC5aH+5MoHFM+KABgTOt0APue4w66Ha8jCUo9QGg=="
   "resolved" "https://registry.npmjs.org/express/-/express-4.17.2.tgz"
   "version" "4.17.2"
@@ -4520,6 +4527,14 @@
   "integrity" "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
+
+"react-papaparse@^3.18.1":
+  "integrity" "sha512-GvYRoJmlhlK+ZHqCacuKPVw3b26qkUZ6OgQo2iZOWepHpUfw7+cIGY1hxucDGXjMgBa7yly7XTVhX4az/KC2Lw=="
+  "resolved" "https://registry.npmjs.org/react-papaparse/-/react-papaparse-3.18.1.tgz"
+  "version" "3.18.1"
+  dependencies:
+    "@types/papaparse" "^5.3.1"
+    "papaparse" "^5.3.1"
 
 "react-popper@2.2.4":
   "integrity" "sha512-NacOu4zWupdQjVXq02XpTD3yFPSfg5a7fex0wa3uGKVkFK7UN6LvVxgcb+xYr56UCuWiNPMH20tntdVdJRwYew=="
