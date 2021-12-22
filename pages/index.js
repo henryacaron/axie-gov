@@ -1,16 +1,48 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+// import {Container, Button} from 'react-bootstrap'
+import {Row, Col, Container, Button, Navbar} from "react-bootstrap"
+import styles from "../styles/Home.module.css";
+
+
+
+var axios = require("axios").default;
+
 import { injected } from "../components/wallet/Connectors"
 import { useWeb3React } from "@web3-react/core";
 import Table from "../components/Table";
-import Form from "../components/Table";
+import Form from "../components/Form";
+
+
 
 
 export default function Home() {
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
-  const [choice, setChoice] = useState(false);
+  const [choice, setChoice] = useState(null);
+  const [playerData, setPlayerData] = useState(null)
+  const roninAcct = '0x3aeB90BfD668cbCF68E6EfF8Fbb9cEFf94A74dB3'
+
+  const options = {
+    method: 'GET',
+    url: `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`,
+    params: {id: roninAcct},
+    headers: {
+      'x-rapidapi-host': 'axie-infinity.p.rapidapi.com',
+      'x-rapidapi-key': '245f30a3a0mshcbd083c413c6b3fp19e0f3jsn5b441100590d'
+    }
+  };
+  
+  useEffect(() => {
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+      setPlayerData(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  },[]);
+  
   async function connect() {
     try {
       const val = await activate(injected)
@@ -38,42 +70,43 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <Container class= "container" style = {{justifyContent: 'center', alignItems: 'center'}}>
     {active && 
-    <div>
-      <span>Connected with <b>{account}</b></span> 
-      <button onClick={disconnect} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Disconnect</button>
-      <form>
-      <label>True or false?
-        <span>True</span>
-        <input
-          type="radio" 
-          value={choice}
-          onChange={(e) => setChoice(true)}
-          checked={choice}
+      <Container>
+      <Navbar className = "d-flex justify-content-between" bg="light" fluid="lg">
+        <div className = "d-flex flex-column">
+          {playerData ? <span>Connected to <b>{playerData.leaderboard.name}</b></span> : "Loading..."}
+          {playerData ? <span>Elo: <b>{playerData.leaderboard.elo}</b></span> : null}
+        </div>
+        <Button onClick={disconnect}>Disconnect</Button>
+       </Navbar>
+      {/* <Form setChoice = {setChoice()} choice = {choice}/>  */}
+      <form className = "d-flex flex-column bg-light width-100 justify-content-center align-items-center">
+        <h3>True or false?</h3>
 
-        />
-        <span>False</span>
+          <Container className = "d-flex flex-row justify-content-around">
+            <Button className = {choice ? "bg-btn btn-primary" : "btn btn-light"} onClick={(e) => setChoice(true)}
+>
+            <h5>True</h5>
+            
+            </Button>
+            <Button  onClick={(e) => setChoice(false)} className = {choice == false ? "bg-btn btn-primary" : "btn btn-light"} >
+              <h5>False</h5>
+             
+            </Button>
+          </Container>
+          <Button className = "mt-5" onClick={() => sign(choice)}>Confirm Choice and Sign</Button>
 
-        <input
-          type="radio" 
-          value={!choice}
-          onChange={(e) => setChoice(false)}
-          checked={!choice}
-        />
-      </label>
-    </form>
-    <span>Selection is {choice ? "true" : "false"}</span>
-    <button onClick={() => sign(choice)} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Sign</button>
-
-    </div>}
+      </form>
+  
+      </Container>}
     {!active &&
-        <div>
-          <button onClick={connect} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Connect to MetaMask</button>
-          <span>Not connected</span>
-        </div>}
+        <Container className="d-flex w-100 align-items-center justify-content-center h-100">
+          <Button onClick={connect} className = "mr-10">Connect to Metamask</Button>
+          {/* <span>Not connected</span> */}
+        </Container>}
       
       {/* <Table/> */}
-    </div>
+    </Container>
   )
 }
