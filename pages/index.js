@@ -13,9 +13,7 @@ export default function Home() {
   const [choice, setChoice] = useState(false);
   async function connect() {
     try {
-      console.log(`injected: ${JSON.stringify(injected)}`)
-      console.log()
-      await activate(injected)
+      const val = await activate(injected)
     } catch (ex) {
       console.log(ex)
     }
@@ -23,12 +21,20 @@ export default function Home() {
   
   async function disconnect() {
     try {
-      console.log("network", library);
-      console.log("connector", connector);
       deactivate()
     } catch (ex) {
       console.log(ex)
     }
+  }
+  
+  async function sign(message) {
+    try {
+      const signer = library.getSigner()
+      const signedMsg = await signer.signMessage(message.toString());
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   return (
@@ -58,7 +64,7 @@ export default function Home() {
       </label>
     </form>
     <span>Selection is {choice ? "true" : "false"}</span>
-    <button onClick={signTransaction(choice)} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Sign</button>
+    <button onClick={() => sign(choice)} className="py-2 mt-20 mb-4 text-lg font-bold text-white rounded-lg w-56 bg-blue-600 hover:bg-blue-800">Sign</button>
 
     </div>}
     {!active &&

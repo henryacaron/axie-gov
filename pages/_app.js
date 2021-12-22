@@ -1,29 +1,19 @@
 import '../styles/globals.css'
-import { Web3ReactProvider, createWeb3ReactRoot } from '@web3-react/core'
+import { Web3ReactProvider } from "@web3-react/core";
+import { Web3Provider } from "@ethersproject/providers";
 
-import Web3 from 'web3'
-import { ethers } from "ethers";
 
-function getLibrary(provider, connector) {
-  // console.log(`window: ${JSON.stringify(window.ethereum)}`)
-  const prov = new ethers.providers.Web3Provider(provider)
-  const signer = prov.getSigner()
-
-  // const prov = new Web3(provider)
-  return prov;
+function getLibrary(provider) {
+  return new Web3Provider(provider) 
 }
-
-// const Web3ReactProviderReloaded = createWeb3ReactRoot('ronin')
-
 
 function MyApp({ Component, pageProps }) {
   return (
+    // A function required by Web3ReactProvider. 
+    // provider will be supplied by useWeb3React() I think
     <Web3ReactProvider getLibrary={getLibrary}>
-      {/* <Web3ReactProviderReloaded getLibrary={getLibrary}> */}
-       <Component {...pageProps} />
-      {/* </Web3ReactProviderReloaded> */}
+      <Component {...pageProps} />
     </Web3ReactProvider>
   )
 }
-
 export default MyApp
