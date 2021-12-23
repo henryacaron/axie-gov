@@ -63,6 +63,13 @@ export default function Home() {
     try {
       const signer = library.getSigner()
       const signedMsg = await signer.signMessage(message.toString());
+      axios.post('http://localhost:3001/submit', {
+        message : message,
+        signedMessage: signedMsg,
+        user: account
+      })
+      .then(result => console.log(result))
+      // .then(body => console.log(body));
     } catch (error) {
       console.log(error)
     }
@@ -81,7 +88,8 @@ export default function Home() {
         <Button onClick={disconnect}>Disconnect</Button>
        </Navbar>
       <Form setChoice = {setChoice} choice = {choice}/>  
-      <Button className = "mt-5" onClick={() => sign(choice)}>Confirm Choice and Sign</Button>  
+      {playerData ? <Button className = "mt-5" onClick={() => sign(choice)}>Confirm Choice and Sign</Button> :
+        <Button disabled = {true} className = "mt-5" onClick={() => submit(choice)}>Connect to Metamask</Button> }
     </Container>}
     
     {!active &&
