@@ -60,19 +60,13 @@ export default function Home() {
   }
   
   async function sign(message) {
-    try {
       const signer = library.getSigner()
       const signedMsg = await signer.signMessage(message.toString());
-      axios.post('http://localhost:3001/submit', {
-        message : message,
-        signedMessage: signedMsg,
-        user: account
-      })
-      .then(result => console.log(result))
-      // .then(body => console.log(body));
-    } catch (error) {
-      console.log(error)
-    }
+      axios.post('http://localhost:3001/submit/', {account: account, msg: message, signedMsg : signedMsg})
+      .then((res) => console.log("success, dictionary sent,", res))
+        .catch((err) => {
+            console.log(err.response);
+        });
     
   }
 
