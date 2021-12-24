@@ -8,6 +8,7 @@ var axios = require("axios").default;
 export default function Header({playerData, setPlayerData}) {
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
   const roninAcct = '0x3aeB90BfD668cbCF68E6EfF8Fbb9cEFf94A74dB3'
+  const API_KEY = process.env.REACT_APP_API_KEY
 
   const options = {
     method: 'GET',
@@ -15,7 +16,7 @@ export default function Header({playerData, setPlayerData}) {
     params: {id: roninAcct},
     headers: {
       'x-rapidapi-host': 'axie-infinity.p.rapidapi.com',
-      'x-rapidapi-key': '245f30a3a0mshcbd083c413c6b3fp19e0f3jsn5b441100590d'
+      'x-rapidapi-key': API_KEY
     }
   };
   

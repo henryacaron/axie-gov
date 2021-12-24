@@ -2,6 +2,7 @@ const express = require('express')
 var unirest = require("unirest");
 const cors = require('cors');
 const { ethers } = require("ethers");
+require('dotenv').config()
 
 const app = express()
 
@@ -34,7 +35,7 @@ app.post('/submit', (req, res) => {
   request.query({"id": propData.account});
   request.headers({
     "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
-    "x-rapidapi-key": "0423af942bmshd3ce77619e50407p140852jsnfb3e5f3fd258",
+    "x-rapidapi-key": process.env.API_KEY,
     "useQueryString": true
   });  
   request.end(result => {

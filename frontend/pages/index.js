@@ -16,6 +16,8 @@ export default function Home() {
   const { active, account, library } = useWeb3React()
   const [playerData, setPlayerData] = useState(undefined)
   const qData = {skillName : "Aqua Vitality", class : "Aquatic", affect: "Shield"}
+  const API_KEY = process.env.REACT_APP_API_KEY
+
 
   return (
     <Container className = "d-flex flex-column justify-content-center">
