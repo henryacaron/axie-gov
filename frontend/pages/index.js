@@ -16,19 +16,6 @@ export default function Home() {
   const { active, account, library } = useWeb3React()
   const [playerData, setPlayerData] = useState(undefined)
   const qData = {skillName : "Aqua Vitality", class : "Aquatic", affect: "Shield"}
-  
-  async function getProposalData(e) {
-    e.preventDefault();
-    axios.post('http://localhost:3001/getProposalData/', {skillName : qData.skillName})
-    .then((res) => {
-      if(res.type == 'error'){
-        alert(`Error: ${res.data}`)
-      } else console.log(res.data)
-    })
-      .catch((err) => {
-          console.log(err.response);
-      });
-}
 
   return (
     <Container className = "d-flex flex-column justify-content-center">
