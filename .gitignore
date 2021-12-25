@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 *.env
 .env
 frontend/.next
 frontend/.env.local
 frontend/yarn-error.log
 node_modules
+=======
+backend/node_modules
+backend/.env
+frontend/.next
+frontend/node_modules
+frontend/.env.local
+fronted/.env
+frontend/yarn-error.log
+.env
+>>>>>>> 96368e84667f63d86c192bb5b11e4bd1849c8ebe
