@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "axie gov prototype backend",
+  "main": "express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henryacaron/axie-gov.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henryacaron/axie-gov/issues"
+  },
+  "homepage": "https://github.com/henryacaron/axie-gov#readme",
+  "dependencies": {
+    "ethers": "^5.5.2",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "unirest": "^0.6.0"
+  }
+}
