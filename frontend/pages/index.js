@@ -44,12 +44,17 @@ export default function Home() {
   return (
     <Container className="d-flex flex-column justify-content-center text-center">
       <Header playerData={playerData} setPlayerData={setPlayerData} />
-      <br />
+      <br/>
+      <br/>
+      <br/>
+
+      <Container>
       <h2>Axie Governance</h2>
       <h4>Propose Changes to Axie Cards</h4>
-
+      </Container>
+      <h2>{Object.keys(choices).length}</h2>
       {active ? (
-        <Container className="d-flex flex-column justify-content-center">
+        <Container className="d-flex flex-column justify-content-center mb-5">
           <Accordion className="h-100 w-80" variant="dark">
             {qData.map((q, idx) => (
               <Accordion.Item key={idx} eventKey={idx}>
@@ -65,9 +70,11 @@ export default function Home() {
               </Accordion.Item>
             ))}
           </Accordion>
+          {active && playerData &&
           <Button
             disabled={!playerData}
             className="mt-5"
+            style = {{ position: "fixed", bottom: "30px", right: "30px", zIndex: "10"}}
             onClick={() => {
               qData.proposal = choices;
               sign(choices);
@@ -75,6 +82,7 @@ export default function Home() {
           >
             Confirm Proposals and Sign
           </Button>
+}
         </Container>
       ): 
       <h3>Connect to Metamask to Continue</h3>
