@@ -52,7 +52,6 @@ export default function Home() {
       <h2>Axie Governance</h2>
       <h4>Propose Changes to Axie Cards</h4>
       </Container>
-      <h2>{Object.keys(choices).length}</h2>
       {active ? (
         <Container className="d-flex flex-column justify-content-center mb-5">
           <Accordion className="h-100 w-80" variant="dark">
