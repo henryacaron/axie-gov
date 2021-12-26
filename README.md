@@ -4,6 +4,6 @@ Axie: Infinity is a game protocol that will be progressively decentralized over 
 
 In Version 0.1, the project offers users the opportunity to alter variables associated to Axie body parts.
 
-Anyone can propose changes.
+Anyone with an Axie Infinity account can propose changes.
 
-Anyone can vote on any change, weighted by their MMR.
+Anyone can vote on any change, weighted by their MMR. Each player gets one vote.
