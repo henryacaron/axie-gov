@@ -1,0 +1,303 @@
+[
+ {
+   "Part Name": "Anemone",
+   "Attack": 80,
+   "Shield": 35,
+   "Description Change": "",
+   "Class": "Aquatic"
+ },
+ {
+   "Part Name": "Doubletalk",
+   "Attack": 60,
+   "Shield": 0,
+   "Description Change": "Ignore shield. Apply sleep to target. (this is just a text change the effect does not change)",
+   "Class": "Bird"
+ },
+ {
+   "Part Name": "Gavel Ant",
+   "Attack": 30,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Grass Snake",
+   "Attack": 20,
+   "Shield": 30,
+   "Description Change": "Apply 1 poison to target.",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Croc",
+   "Attack": 85,
+   "Shield": 60,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Thorny Caterpillar",
+   "Attack": 100,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Lagging",
+   "Attack": 30,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Risky Fish",
+   "Attack": 105,
+   "Shield": 20,
+   "Description Change": "",
+   "Class": "Aquatic"
+ },
+ {
+   "Part Name": "Shoal Star",
+   "Attack": 110,
+   "Shield": 10,
+   "Description Change": "",
+   "Class": "Aquatic"
+ },
+ {
+   "Part Name": "Tiny Turtle",
+   "Attack": 75,
+   "Shield": 50,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Yam",
+   "Attack": 20,
+   "Shield": 20,
+   "Description Change": "",
+   "Class": "Plant"
+ },
+ {
+   "Part Name": "Garish Worm",
+   "Attack": 90,
+   "Shield": 40,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Cute Bunny",
+   "Attack": 100,
+   "Shield": 35,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Goldfish",
+   "Attack": 105,
+   "Shield": 20,
+   "Description Change": "",
+   "Class": "Aquatic"
+ },
+ {
+   "Part Name": "Post Flight",
+   "Attack": 110,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Bird"
+ },
+ {
+   "Part Name": "cuckoo",
+   "Attack": 0,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Bird"
+ },
+ {
+   "Part Name": "Nimmo",
+   "Attack": 20,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Aquatic"
+ },
+ {
+   "Part Name": "Antenna",
+   "Attack": 80,
+   "Shield": 50,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Dual Blade",
+   "Attack": 130,
+   "Shield": 20,
+   "Description Change": "Deal 200% damage on critical strikes.",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Razor Bite",
+   "Attack": 95,
+   "Shield": 55,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Cottontail",
+   "Attack": 0,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Fish Snack",
+   "Attack": 60,
+   "Shield": 90,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Timber",
+   "Attack": 80,
+   "Shield": 80,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Mosquito",
+   "Attack": 80,
+   "Shield": 40,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Buzz Buzz",
+   "Attack": 110,
+   "Shield": 40,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Merry",
+   "Attack": 75,
+   "Shield": 85,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Pupae",
+   "Attack": 70,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Tri-Feather",
+   "Attack": 40,
+   "Shield": 10,
+   "Description Change": "",
+   "Class": "Bird"
+ },
+ {
+   "Part Name": "Rose Bud",
+   "Attack": 0,
+   "Shield": 50,
+   "Description Change": "",
+   "Class": "Plant"
+ },
+ {
+   "Part Name": "Twin Tail",
+   "Attack": 40,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Unko",
+   "Attack": 30,
+   "Shield": 100,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Red Ear",
+   "Attack": 10,
+   "Shield": 145,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Imp",
+   "Attack": 80,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Kotaro",
+   "Attack": 85,
+   "Shield": 30,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Jaguar",
+   "Attack": 120,
+   "Shield": 35,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Cactus",
+   "Attack": 115,
+   "Shield": 20,
+   "Description Change": "",
+   "Class": "Plant"
+ },
+ {
+   "Part Name": "Ronin",
+   "Attack": 80,
+   "Shield": 0,
+   "Description Change": "",
+   "Class": "Beast"
+ },
+ {
+   "Part Name": "Scaly Spear",
+   "Attack": 110,
+   "Shield": 50,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Wall Gecko",
+   "Attack": 90,
+   "Shield": 20,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Scarab",
+   "Attack": 110,
+   "Shield": 40,
+   "Description Change": "Target cannot be healed for 2 rounds.",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Scaly Spoon",
+   "Attack": 80,
+   "Shield": 50,
+   "Description Change": "",
+   "Class": "Reptile"
+ },
+ {
+   "Part Name": "Ant",
+   "Attack": 30,
+   "Shield": 100,
+   "Description Change": "",
+   "Class": "Bug"
+ },
+ {
+   "Part Name": "Strawberry Shortcake",
+   "Attack": 0,
+   "Shield": 40,
+   "Description Change": "",
+   "Class": "Plant"
+ }
+]

@@ -22,7 +22,7 @@ export default function Question({ qData, setChoice, choice, attr }) {
                     : "btn btn-light"
                   : "btn btn-light"
               }
-              onClick={(e) => setChoice(qData.skillName, attr, item)}
+              onClick={(e) => setChoice(qData["Part Name"], attr, item)}
             >
               {item > 0 ? "+" : null}
               {item}

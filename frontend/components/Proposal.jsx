@@ -11,7 +11,7 @@ export default function Proposal({ qData, choice, setChoice }) {
   const [consensusShield, setConsensusShield] = useState(undefined);
 
   useEffect(() => {
-    getProposalData(qData.skillName);
+    getProposalData(qData["Part Name"]);
   }, []);
 
   async function getProposalData(skillName) {

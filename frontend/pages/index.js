@@ -8,24 +8,13 @@ import { useWeb3React } from "@web3-react/core";
 import Table from "../components/Table";
 import Proposal from "../components/Proposal";
 import Header from "../components/Header";
-
-
-var axios = require("axios").default;
+const qData = require('../data/balancingdata.json');
+const axios = require("axios").default;
 
 export default function Home() {
   const { active, account, library } = useWeb3React();
   const [playerData, setPlayerData] = useState(undefined);
   const [choices, setChoices] = useState({});
-  const qData = [
-    {
-      skillName: "Aqua Vitality",
-      class: "Aquatic",
-      Shield: 40,
-      Attack: 80,
-      Desc: "",
-    },
-    { skillName: "Aquaponics", class: "Aquatic", Shield: 40, Attack: 80 },
-  ];
 
   async function sign(message) {
     let msgString = JSON.stringify(message);
@@ -64,12 +53,12 @@ export default function Home() {
           <Accordion className="h-100 w-80" variant="dark">
             {qData.map((q, idx) => (
               <Accordion.Item key={idx} eventKey={idx}>
-                <Accordion.Header>{q.skillName}</Accordion.Header>
+                <Accordion.Header>{q["Part Name"]}</Accordion.Header>
                 <Accordion.Body>
                   <Proposal
                     qData={q}
                     playerData={playerData}
-                    choice={choices[q.skillName]}
+                    choice={choices[q["Part Name"]]}
                     setChoice={handleChoiceChange}
                   />
                 </Accordion.Body>

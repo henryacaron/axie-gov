@@ -1,0 +1,51 @@
+Part Name,Attack,Shield,Description Change,Class
+Anemone,80,35,,Aquatic
+Anemone,80,35,,Aquatic
+Doubletalk,60,0,Ignore shield. Apply sleep to target. (this is just a text change the effect does not change),Bird
+Gavel Ant,30,30,,Bug
+Grass Snake,20,30,Apply 1 poison to target.,Reptile
+Croc,85,60,,Reptile
+Thorny Caterpillar,100,30,,Bug
+Lagging,30,0,,Bug
+Risky Fish,105,20,,Aquatic
+Shoal Star,110,10,,Aquatic
+Tiny Turtle,75,50,,Reptile
+Yam,20,20,,Plant
+Garish Worm,90,40,,Bug
+Cute Bunny,100,35,,Bug
+Goldfish,105,20,,Aquatic
+Post Flight,110,0,,Bird
+cuckoo,0,30,,Bird
+Nimmo,20,0,,Aquatic
+Antenna,80,50,,Bug
+Dual Blade,130,20,Deal 200% damage on critical strikes.,Beast
+Razor Bite,95,55,,Reptile
+Cottontail,0,30,,Beast
+Fish Snack,60,90,,Bug
+Timber,80,80,,Beast
+Mosquito,80,40,,Bug
+Buzz Buzz,110,40,,Bug
+Merry,75,85,,Beast
+Pupae,70,0,,Bug
+Tri-Feather,40,10,,Bird
+Rose Bud,0,50,,Plant
+Twin Tail,40,0,,Bug
+Unko,30,100,,Reptile
+Red Ear,10,145,,Reptile
+Imp,80,30,,Beast
+Kotaro,85,30,,Reptile
+Jaguar,120,35,,Beast
+Cactus,115,20,,Plant
+Ronin,80,0,,Beast
+Scaly Spear,110,50,,Reptile
+Wall Gecko,90,20,,Reptile
+Scarab,110,40,Target cannot be healed for 2 rounds.,Bug
+Scaly Spoon,80,50,,Reptile
+Ant,30,100,,Bug
+Strawberry Shortcake,0,40,,Plant
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
