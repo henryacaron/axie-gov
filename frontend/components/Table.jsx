@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Table as T } from "react-bootstrap";
 
 export default function Table({ headers, data }) {
+
   return (
-    <T striped hover>
+    <T striped bordered hover>
       <thead>
         <tr>
           {headers.map((header, i) => (
-            <th key={i}>{header.title}</th>
+            <th key={i} data-sortable="true">
+              {header.title}
+            </th>
           ))}
         </tr>
       </thead>

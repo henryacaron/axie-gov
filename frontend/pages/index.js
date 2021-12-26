@@ -6,9 +6,8 @@ import styles from "../styles/Home.module.css";
 import { injected } from "../components/wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 import Table from "../components/Table";
-import Question from "../components/Question";
+import Proposal from "../components/Proposal";
 import Header from "../components/Header";
-import PrevProposals from "../components/PrevProposals";
 
 
 var axios = require("axios").default;
@@ -57,15 +56,17 @@ export default function Home() {
     <Container className="d-flex flex-column justify-content-center text-center">
       <Header playerData={playerData} setPlayerData={setPlayerData} />
       <br />
-      <h2>Choose an Axie Card and Propose How it Should Change</h2>
-      {active && (
+      <h2>Axie Governance</h2>
+      <h4>Propose Changes to Axie Cards</h4>
+
+      {active ? (
         <Container className="d-flex flex-column justify-content-center">
           <Accordion className="h-100 w-80" variant="dark">
             {qData.map((q, idx) => (
               <Accordion.Item key={idx} eventKey={idx}>
                 <Accordion.Header>{q.skillName}</Accordion.Header>
                 <Accordion.Body>
-                  <Question
+                  <Proposal
                     qData={q}
                     playerData={playerData}
                     choice={choices[q.skillName]}
@@ -86,7 +87,9 @@ export default function Home() {
             Confirm Proposals and Sign
           </Button>
         </Container>
-      )}
+      ): 
+      <h3>Connect to Metamask to Continue</h3>
+      }
     </Container>
   );
 }

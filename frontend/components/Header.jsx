@@ -22,8 +22,6 @@ export default function Header({ playerData, setPlayerData }) {
   };
 
   useEffect(() => {
-    // console.log(`active: ${active}`);
-    // console.log(`api key: ${JSON.stringify(process.env)}`);
     axios
       .request(options)
       .then(function (response) {
@@ -51,40 +49,13 @@ export default function Header({ playerData, setPlayerData }) {
     }
   }
   return (
-    <Navbar className = "d-flex justify-content-between align-items-center p-2 text-left" bg="white" fluid="lg">
-      {active ? (
-        <Container
-          className="d-flex justify-content-between align-items-center p-2"
-          bg="dark"
-          fluid="lg"
-        >
-          <div className="d-flex flex-column text-primary text-justify">
-            {playerData ? (
-              <span>
-                Connected to <b>{playerData.leaderboard.name}</b>
-              </span>
-            ) : (
-              "Loading..."
-            )}
-            {playerData ? (
-              <span>
-                Elo: <b>{playerData.leaderboard.elo}</b>
-              </span>
-            ) : null}
+    <Navbar className = "d-flex justify-content-between align-items-center p-2" bg="light" fluid="lg">
+          <div className="d-flex flex-column text-primary text-left">
+            <span className = "text-left">{active ? playerData ? `Connected to: ${playerData.leaderboard.name}` : "Loading..." : ""} </span>
+            <span className = "text-left">{active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}</span>
           </div>
-          <Button onClick={disconnect}>Disconnect</Button>
-        </Container>
-      ) : (
-        <Container
-          className="d-flex justify-content-center align-items-center p-2"
-          bg="dark"
-          fluid="lg"
-        >
-          <Button onClick={connect} className="mr-10">
-            Connect to Metamask
-          </Button>
-        </Container>
-      )}
+          <Button onClick={active ? disconnect : connect} className="mr-10">{active? "Disconnect" : "Connect to Metamask"}</Button>
+     
     </Navbar>
   );
 }
