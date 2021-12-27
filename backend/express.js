@@ -40,11 +40,11 @@ app.post('/submit', (req, res) => {
     number : req.body.account,
   }
 
-  // const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${req.body.account}`);
-  // request.query({"id": req.body.account});
+  const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${req.body.account}`);
+  request.query({"id": req.body.account});
 
-  const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`);
-  request.query({"id": roninAcct});
+  // const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`);
+  // request.query({"id": roninAcct});
   
   request.headers({
     "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
@@ -73,7 +73,7 @@ app.post('/submit', (req, res) => {
 });
 
 app.post('/getProposalData', (req, res) => {
-  console.log(`req.body: ${JSON.stringify(req.body)}, data: ${data}`)
+  console.log(`req.body: ${JSON.stringify(req.body)}, data: ${JSON.stringify(data)}`)
   const reqData = req.body.skillName;
   res.send(data[reqData]);
 })
