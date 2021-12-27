@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Container, Card, Button, Modal } from "react-bootstrap";
+import { Container, Card, Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import Proposal from "./Proposal";
 import { useWeb3React } from "@web3-react/core";
 const axios = require("axios").default;
-const qData = require("../data/balancingdata.json");
+const rawData = require("../data/balancingdata.json");
 
 export default function Body({playerData}) {
   const [activePart, setActivePart] = useState(undefined);
   const [choices, setChoices] = useState({});
-  const { active, library } = useWeb3React();
-
+  const { active, library, account } = useWeb3React();
+  const [filterKey, setFilterKey] = useState("")
+  const [filteredData, setFilteredData] = useState(rawData);
   const deleteEntry = (skill) => setChoices(remove(choices, skill => !skill));
+
+  const filter = (e) => {
+    e.preventDefault();
+    const substr = e.target.value;
+    setFilterKey(substr);
+    console.log(`substring: ${JSON.stringify(substr)}`)
+    const newData = rawData.filter(elem => elem["Part Name"].toLowerCase().includes(substr.toLowerCase()));
+    setFilteredData(newData);
+  }
 
   const remove = (obj, predicate) => 
     Object.keys(obj)
@@ -47,8 +57,16 @@ export default function Body({playerData}) {
 
   return (
     <Container className="row">
-      {qData.map((q, idx) => (
-        <Container className=" col-lg-3 col-md-4 col-sm-6 col-xs-1 mb-3">
+      <InputGroup className = "mb-4">
+        <FormControl
+          placeholder = "Search for Cards"
+          aria-label = "Card filter"
+          value = {filterKey}
+          onChange = {filter}
+        />
+      </InputGroup>
+      {filteredData?.map((q, idx) => (
+        <Container key = {idx} className="col-md-4 col-sm-6 col-xs-1 mb-3">
           <Card
             role="button"
             style={{ width: "100%" }}
@@ -56,9 +74,19 @@ export default function Body({playerData}) {
           >
             <Card.Body>
               <Card.Title>{q["Part Name"]}</Card.Title>
-              <Card.Text>
-                Attack: {q.Attack} <br />
-                Defense : {q.Shield}
+              <Card.Text className = "row">
+                <Container className = "col-lg-6">
+                  <b>Original</b> <hr style= {{margin: "0.2rem 0"}}/>
+                  Attack: {q.Attack} <br />
+                  Defense: {q.Shield}
+                </Container>
+                {choices[q["Part Name"]] &&
+                <Container className = "col-lg-6">
+                  <b>Proposal</b> <hr style = {{margin: "0.2rem 0"}}/>
+                  Attack: {choices[q["Part Name"]].Attack} <br />
+                  Defense: {choices[q["Part Name"]].Shield}
+                </Container>
+                } 
               </Card.Text>
             </Card.Body>
           </Card>
@@ -86,12 +114,13 @@ export default function Body({playerData}) {
                 Clear
               </Button>
               <Button variant="primary" onClick={handleClose}>
-                Save and Exit
+                Save and Close
               </Button>
             </Modal.Footer>
           </Modal>
         </Container>
       ))}
+      {Object.keys(filteredData) == 0 && <span>No results</span>}
       {active && playerData && (
         <Button
           disabled={!playerData || !Object.keys(choices).length}
@@ -101,14 +130,11 @@ export default function Body({playerData}) {
             bottom: "30px",
             right: "30px",
             zIndex: "3",
-            width: "20%"
+            width: "30%"
           }}
-          onClick={() => {
-            qData.proposal = choices;
-            sign(choices);
-          }}
+          onClick={() => {sign(choices) }}
         >
-          Confirm and Sign ({Object.keys(choices).length}) Vote{Object.keys(choices).length !== 1 ? 's' : null}
+          Confirm ({Object.keys(choices).length}) Vote{Object.keys(choices).length !== 1 ? 's' : null} and Sign Message
         </Button>
       )}
     </Container>

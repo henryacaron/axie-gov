@@ -49,7 +49,7 @@ export default function Header({ playerData, setPlayerData }) {
     }
   }
   return (
-    <Navbar className = "d-flex justify-content-between align-items-center p-2 fixed-top" bg="light" fluid="lg">
+    <Navbar className = "d-flex justify-content-between align-items-center p-2 fixed-top navbar-expand-lg" bg="light" fluid="lg">
           <div className="d-flex flex-column text-primary text-left">
             <span className = "text-left">{active ? playerData ? `Connected to: ${playerData.leaderboard.name}` : "Loading..." : ""} </span>
             <span className = "text-left">{active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}</span>

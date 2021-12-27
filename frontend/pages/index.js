@@ -9,7 +9,7 @@ import Body from "../components/Body";
 import Header from "../components/Header";
 
 export default function Home() {
-  const { active, account, library } = useWeb3React();
+  const { active } = useWeb3React();
   const [playerData, setPlayerData] = useState(undefined);
 
   return (
