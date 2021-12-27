@@ -11,16 +11,16 @@ export default function Question({ qData, setChoice, choice, attr }) {
       <h5>
         {attr} Change (Currently {qData[attr]})
       </h5>
-        <Container className="d-flex flex-row justify-content-center">
+        <Container className="row">
           {choices.map((item) => (
             <Button
               key={item}
-              className={
-                choice !== undefined
+              className={ `col med-2 m-1
+                ${choice !== undefined
                   ? choice == item
                     ? "bg-btn btn-primary"
                     : "btn btn-light"
-                  : "btn btn-light"
+                  : "btn btn-light"}`
               }
               onClick={(e) => setChoice(qData["Part Name"], attr, item)}
             >

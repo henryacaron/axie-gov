@@ -68,8 +68,17 @@ export default function Proposal({ qData, choice, setChoice }) {
 
   return (
     <Container className="row">
-      <Container className="col-lg-7">
+      <Container className="col-lg-6">
         <h3>Cast Your Vote</h3>
+        <hr/>
+        <Question
+          qData={qData}
+          setChoice={setChoice}
+          choice={choice?.Attack}
+          attr="Attack"
+        />
+  
+        <hr/>
         <Question
           qData={qData}
           setChoice={setChoice}
@@ -77,32 +86,28 @@ export default function Proposal({ qData, choice, setChoice }) {
           attr="Shield"
         />
         <hr />
-        <Question
-          qData={qData}
-          setChoice={setChoice}
-          choice={choice?.Attack}
-          attr="Attack"
-        />
-        <hr/>
+        
       </Container>
-      <Container className = "col-lg-5">
+      <Container className = "col-lg-6">
         <h3>Voting Summary</h3>
+        <hr/>
         {rows ? (
-          <Container>
+          <div>
             <Container className="row">
-              <span className = "col-lg-4">Number of Voters: {rows.length}</span>
+              <span className = "col-lg-4">Votes: {rows.length}</span>
               <span className = "col-lg-4">
-                Consensus Attack Proposal: {Math.round(consensusAttack)}
+                Attack Change: {Math.round(consensusAttack)}
               </span>
               <span className = "col-lg-4">
-                Consensus Shield Proposal: {Math.round(consensusShield)}
+                Shield Change: {Math.round(consensusShield)}
               </span>
-              <hr />
             </Container>
+            <hr />
+
             <h3>Previous Votes</h3>
 
-            <Table headers={headers} data={rows} />
-          </Container>
+            <Table headers={headers} data={rows} style = {{height: '50%', overflowY: 'scroll'}}/>
+          </div>
         ) : (
           <h5>No Previous Proposals</h5>
         )}
