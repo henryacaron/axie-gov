@@ -21,6 +21,7 @@ export default function Proposal({ qData, choice, setChoice }) {
         if (res.type == "error") {
           alert(`Error: ${res.data}`);
         } else {
+          console.log(`received ${res.data}`)
           organizeData(res.data);
         }
       })

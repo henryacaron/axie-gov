@@ -3,3 +3,4 @@ frontend/.env.local
 frontend/yarn-error.log
 node_modules
 .env
+progress.mp4
