@@ -6,15 +6,14 @@ import { useWeb3React } from "@web3-react/core";
 var axios = require("axios").default;
 
 export default function Header({ playerData, setPlayerData }) {
-  const { active, account, library, connector, activate, deactivate } =
+  const { account, active, activate, deactivate } =
     useWeb3React();
-  const roninAcct = "0x3aeB90BfD668cbCF68E6EfF8Fbb9cEFf94A74dB3";
   const API_KEY = "";
 
   const options = {
     method: "GET",
-    url: `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`,
-    params: { id: roninAcct },
+    url: `https://axie-infinity.p.rapidapi.com/get-update/${account}`,
+    params: { id: account },
     headers: {
       "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
       "x-rapidapi-key": API_KEY,
@@ -22,6 +21,7 @@ export default function Header({ playerData, setPlayerData }) {
   };
 
   useEffect(() => {
+    if(!active) return;
     axios
       .request(options)
       .then(function (response) {
@@ -31,7 +31,7 @@ export default function Header({ playerData, setPlayerData }) {
       .catch(function (error) {
         console.error(error);
       });
-  }, []);
+  }, [active]);
 
   async function connect() {
     try {
@@ -49,8 +49,8 @@ export default function Header({ playerData, setPlayerData }) {
     }
   }
   return (
-    <Navbar className = "d-flex justify-content-between align-items-center p-2 fixed-top navbar-expand-lg" bg="light" fluid="lg">
-          <div className="d-flex flex-column text-primary text-left">
+    <Navbar className = "d-flex justify-content-between align-items-center p-2 fixed-top" bg="light" fluid="lg">
+          <div className="d-flex flex-column text-primary" style={{textAlign : "left"}}>
             <span className = "text-left">{active ? playerData ? `Connected to: ${playerData.leaderboard.name}` : "Loading..." : ""} </span>
             <span className = "text-left">{active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}</span>
           </div>
