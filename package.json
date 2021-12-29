@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bootstrap-autocomplete": "^2.3.7",
+    "mdbreact": "^5.2.0",
+    "react-autocomplete": "^1.8.1"
+  }
+}
