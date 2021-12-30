@@ -30,6 +30,8 @@ export default function Propose({ addProposal, currProposals, prevProposals }) {
                 Attack: {item.Attack} Shield: {item.Shield}
               </Card.Subtitle>
               <Card.Text>{item.Description}</Card.Text>
+              <Card.Text>{item.Reason}</Card.Text>
+
             </Card.Body>
           </Card>
         );
@@ -40,6 +42,7 @@ export default function Propose({ addProposal, currProposals, prevProposals }) {
         save={saveAndClose}
       />
       <Card
+      role="button"
         className="col-4 m-2 d-flex justify-content-center align-items-center"
         onClick={() => handleAdd()}
         style={{minHeight: "100px"}}
@@ -52,11 +55,11 @@ export default function Propose({ addProposal, currProposals, prevProposals }) {
         return (
           <Card key={idx} className="col-4 m-2">
             <Card.Body>
-              <Card.Title>{item["Part Name"]}</Card.Title>
+              <Card.Title>{item.data["Part Name"]}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                Attack: {item.Attack} Shield: {item.Shield}
+                Attack: {item.data.Attack} Shield: {item.data.Shield}
               </Card.Subtitle>
-              <Card.Text>{item.Description}</Card.Text>
+              <Card.Text>{item.data.Description}</Card.Text>
             </Card.Body>
           </Card>
         );
