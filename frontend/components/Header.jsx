@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Container, Button, Navbar } from "react-bootstrap";
-import { injected } from "../components/wallet/Connectors";
+import { injected } from "./wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 // import 'styles/nav.css'
 var axios = require("axios").default;
 
 export default function Header({ playerData, setPlayerData, tab, setTab }) {
   const { account, active, activate, deactivate } = useWeb3React();
-  const API_KEY = "";
+  const API_KEY = "0423af942bmshd3ce77619e50407p140852jsnfb3e5f3fd258";
 
   const options = {
     method: "GET",
@@ -43,12 +43,14 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
       </div>
       
       <div
+      role="button"
         className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Vote" ? "border border-primary bg-white" : null}`}
         onClick={() => setTab("Vote")}
       >
         Vote
       </div>
       <div
+      role="button"
         className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Propose" ? "border border-primary bg-white" : null}`}
         onClick={() => setTab("Propose")}
       >

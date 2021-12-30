@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Container, Button, Nav } from "react-bootstrap";
-import { injected } from "../components/wallet/Connectors";
+import { injected } from "./wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 var axios = require("axios").default;
 
-export default function Sidebar({ playerData, setPlayerData, choices }) {
-  const { account, active, activate, deactivate } = useWeb3React();
+export default function Sidebar({ proposals, votes }) {
 
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 bg-light"
       style={{
-        minHeight: "100%",
+        width: '250px',
+        height: "100vh - 53px"
       }}
     >
-      <div>
-        <span className="fs-5">Proposals ({choices.proposals.length})</span>
-        {choices.proposals.map((item, idx) => {
+      <div className = "h-50">
+        <span className="fs-5">Proposals ({proposals.length})</span>
+        {proposals.map((item, idx) => {
           return (
             <Container key={idx}>
               <div className="d-flex flex-row justify-content-around">
@@ -31,31 +31,34 @@ export default function Sidebar({ playerData, setPlayerData, choices }) {
                 </span>
               </div>
               <span>
-              {JSON.stringify(item)}
+              {/* {JSON.stringify(item)} */}
 
-                {/* {item.Description.slice(0, 30)}
-                {item.Description.length > 30 ? "..." : ""} */}
+                {item.Description.slice(0, 30)}
+                {item.Description.length > 30 ? "..." : ""}
               </span>
             </Container>
           );
         })}
         <hr style={{ margin: "0.25rem 0" }} />
-        <span className="fs-5">Votes ({choices.votes.length})</span>
-        {choices.votes.map((item, idx) => {
+        </div>
+        <div className = "h-50">
+        <span className="fs-5">Votes ({votes.length})</span>
+        {votes.map((vote, idx) => {
           return (
             <Container key={idx}>
+              {/* {JSON.stringify(vote)} */}
               <div className="d-flex flex-row justify-content-around">
-                <strong>{item["Part Name"]}</strong>
+                <strong>{vote.data["Part Name"]}</strong>
                 <span>
-                  <i className="fa fa-sword" /> A: {item.Attack}
+                  <i className="fa fa-sword" /> A: {vote.data.Attack}
                 </span>
                 <span>
-                  <i className="fa fa-shield" /> S: {item.Shield}
+                  <i className="fa fa-shield" /> S: {vote.data.Shield}
                 </span>
               </div>
               <span>
-                {/* {item.Description.slice(0, 30)}
-                {item.Description.length > 30 ? "..." : ""} */}
+                {vote.data.Description.slice(0, 30)}
+                {vote.data.Description.length > 30 ? "..." : ""}
               </span>
             </Container>
           );
