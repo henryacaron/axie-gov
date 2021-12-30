@@ -146,7 +146,7 @@ export default function Proposal({ active, cancel, save }) {
               "Part Name": card,
               Attack: attackVal,
               Shield: shieldVal,
-              Desc: desc,
+              Description: desc,
               Reason: reason,
             });
           }}

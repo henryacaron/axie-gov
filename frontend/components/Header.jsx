@@ -35,27 +35,38 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
 
   return (
     <Navbar
-      className="fixed-top w-100 items-start z-10 bg-light inline-flex" style = {{height: "53px"}}
+      className="fixed-top w-100 items-start z-10 bg-light inline-flex"
+      style={{ height: "53px", padding: "0"}}
     >
-      <div className = "col-8">
-        <strong>Axie Governance</strong>
+      <div className="col-lg-2 col-md-3">
+        <strong className="fs-5"> Axie Governance</strong>
       </div>
-      <Button onClick = {() => setTab("Propose")}>Propose</Button>
-        <Button onClick = {() => setTab("Vote")}>Vote</Button>
+      
       <div
-        className="d-flex flex-column text-primary col-2"
-        style={{ textAlign: "left" }}
+        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Vote" ? "border border-primary bg-white" : null}`}
+        onClick={() => setTab("Vote")}
       >
-       
-
-        <span className="text-right">
+        Vote
+      </div>
+      <div
+        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Propose" ? "border border-primary bg-white" : null}`}
+        onClick={() => setTab("Propose")}
+      >
+        Propose
+      </div> 
+    
+      <div
+        className="d-flex flex-column col-lg-8 col-md-7"
+        style={{ textAlign: "right" }}
+      >
+        <strong className="text-right fs-5 mb-0">
           {active
             ? playerData
-              ? `Connected to: ${playerData.leaderboard.name}`
+              ? `${playerData.leaderboard.name}`
               : "Loading..."
             : ""}{" "}
-        </span>
-        <span className="text-left">
+        </strong>
+        <span className = "mt-0">
           {active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}
         </span>
       </div>

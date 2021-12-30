@@ -13,30 +13,17 @@ import Sidebar from "../components/Sidebar";
 export default function Home() {
   const cs = {
     proposals: [
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
+      // {
+      //   "Part Name": "Anemone",
+      //   Attack: 65,
+      //   Shield: 65,
+      //   Description: "It makes the Axie turn blue",
+      //   Reason: "Because it would be more fun!",
+      // }
     ],
     votes: [
       {
+        id: 0,
         "Part Name": "Anemone",
         mmr: 2100,
         Attack: "69",
@@ -45,36 +32,17 @@ export default function Home() {
         Reason: "Duh",
         user: "0xhank",
         votes: 50,
-      },
-      {
-        "Part Name": "Anemone",
-        mmr: 2101,
-        Attack: "70",
-        Shield: "70",
-        Description: "Idk",
-        Reason: "",
-        user: "Will Robinson",
-        votes: 2,
-      },
-      {
-        "Part Name": "Anemone",
-        mmr: 2101,
-        Attack: "70",
-        Shield: "70",
-        Description: "Idk",
-        Reason: "",
-        user: "Will Robinson",
-        votes: 6,
-      },
+      }
     ],
   };
 
+
   const [playerData, setPlayerData] = useState(undefined);
   const { account, active, activate, deactivate } = useWeb3React();
-  const [tab, setTab] = useState("Propose");
+  const [tab, setTab] = useState("Vote");
   const [choices, setChoices] = useState(cs);
   return (
-    <div className="w-vw h-vh">
+    <div style ={{minHeight: "100%", position:"relative"}}>
       <Header
         playerData={playerData}
         setPlayerData={setPlayerData}

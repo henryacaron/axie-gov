@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Tabs, Tab, Button } from "react-bootstrap";
+import { Container, Modal, Tab, Button } from "react-bootstrap";
 import { useWeb3React } from "@web3-react/core";
 import Propose from "../components/Propose";
 import Vote from "../components/Vote";
@@ -8,25 +8,76 @@ import { injected } from "../components/wallet/Connectors";
 var axios = require("axios").default;
 
 export default function Body({ playerData, tab, choices, setChoices }) {
-  const { active, account, activate } = useWeb3React();
+  const { active, account, activate, library } = useWeb3React();
   const [data, setData] = useState();
-  const [choices, setChoices] = useState({});
   const [currProposals, setCurrProposals] = useState([]);
 
+  async function sign(message) {
+    let msgString = JSON.stringify(message);
+    const signer = library.getSigner();
+    const sig = await signer.signMessage(msgString);
+
+    axios
+      .post("http://localhost:3001/submit/", {
+        account: account,
+        proposals: msgString,
+        sig: sig,
+      })
+      .then((res) => {
+        if (res.type == "error") {
+          alert(`Error: ${res.data.message}`);
+        } else alert(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    setChoices({proposals: [], choices: []})
+  }
+  const prevVotes = [
+    {
+      id: 0,
+      "Part Name": "Anemone",
+      mmr: 2100,
+      Attack: "69",
+      Shield: "69",
+      Description: "It would be sick",
+      Reason: "Duh",
+      user: "0xhank",
+      votes: 50,
+    },
+    {
+      id: 1,
+      "Part Name": "Anemone",
+      mmr: 2101,
+      Attack: "70",
+      Shield: "70",
+      Description: "Idk",
+      Reason: "",
+      user: "Will Robinson",
+      votes: 2,
+    },
+    {
+      id: 2,
+      "Part Name": "Anemone",
+      mmr: 2101,
+      Attack: "70",
+      Shield: "70",
+      Description: "Idk",
+      Reason: "",
+      user: "Will Robinson",
+      votes: 6,
+    },
+  ];
   function addProposal(proposal) {
     console.log(`proposal: ${proposal}`);
-    setCurrProposals([...currProposals, proposal]);
+    setChoices({ ...choices, proposals: [...choices.proposals, proposal] });
     console.log(`currProposals: ${currProposals}`);
   }
 
-  function newVote(vote) {
-    setChoices({ ...choices, votes: [ ...choices.votes, vote ] });
-  }
+  function updateVote(vote) {
 
-  function removeVote(vote) {
-    setChoices({ ...choices, votes: [ ...choices.votes, vote ] });
+    setChoices({ ...choices, votes: [...choices.votes, vote] });
   }
-
 
   //   useEffect(() => {
   //     setInterval(() => {
@@ -57,22 +108,20 @@ export default function Body({ playerData, tab, choices, setChoices }) {
   }
 
   return (
-    <div>
+    <div className="w-100 overflow-auto">
       {active ? (
-        <Container className="w-100">
+        <Container >
           {tab == "Propose" ? (
             <Propose
               addProposal={addProposal}
               currProposals={choices.proposals}
               prevProposals={[]}
-
             />
           ) : (
             <Vote
-              playerData={playerData}
-              choices={choices.votes}
-              addVote={newVote}
-              removeVote = {removeVote}
+              myVotes={choices.votes}
+              updateVote={updateVote}
+              proposals={prevVotes}
             />
           )}
           {
@@ -94,12 +143,21 @@ export default function Body({ playerData, tab, choices, setChoices }) {
           }
         </Container>
       ) : (
-        <div>
-          <h3>Connect to Metamask to Continue</h3>
+        <Modal   show={!active}
+        md
+        aria-labelledby="contained-modal-title-vcenter"
+        className = "pd-10">
+        <Modal.Header>
+          Connect to Metamask to Continue
+          </Modal.Header>
+          <Modal.Body>
+        <Container className = "d-flex justify-content-center align-items-center">
           <Button onClick={connect} className="btn btn-primary">
             {"Connect to Metamask"}
           </Button>
-        </div>
+          </Container>
+          </Modal.Body>
+        </Modal>
       )}
     </div>
   );
