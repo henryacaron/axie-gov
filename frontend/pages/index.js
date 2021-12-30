@@ -11,70 +11,15 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 export default function Home() {
-  const cs = {
-    proposals: [
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
-      {
-        "Part Name": "Anemone",
-        Attack: 65,
-        Shield: 65,
-        Description: "It makes the Axie turn blue",
-        Reason: "Because it would be more fun!",
-      },
-    ],
-    votes: [
-      {
-        "Part Name": "Anemone",
-        mmr: 2100,
-        Attack: "69",
-        Shield: "69",
-        Description: "It would be sick",
-        Reason: "Duh",
-        user: "0xhank",
-        votes: 50,
-      },
-      {
-        "Part Name": "Anemone",
-        mmr: 2101,
-        Attack: "70",
-        Shield: "70",
-        Description: "Idk",
-        Reason: "",
-        user: "Will Robinson",
-        votes: 2,
-      },
-      {
-        "Part Name": "Anemone",
-        mmr: 2101,
-        Attack: "70",
-        Shield: "70",
-        Description: "Idk",
-        Reason: "",
-        user: "Will Robinson",
-        votes: 6,
-      },
-    ],
-  };
+
+
 
   const [playerData, setPlayerData] = useState(undefined);
   const { account, active, activate, deactivate } = useWeb3React();
-  const [tab, setTab] = useState("Propose");
-  const [choices, setChoices] = useState(cs);
+  const [tab, setTab] = useState("Vote");
+  const [choices, setChoices] = useState({proposals: [], votes: []});
   return (
-    <div className="w-vw h-vh">
+    <div style ={{minHeight: "100%", position:"relative"}}>
       <Header
         playerData={playerData}
         setPlayerData={setPlayerData}
@@ -82,17 +27,8 @@ export default function Home() {
         setTab={setTab}
       />
       <div style={{ height: "53px" }}></div>
-      <div className="d-flex flex-row">
-        {active && (
-          <Sidebar
-            playerData={playerData}
-            setPlayerData={setPlayerData}
-            choices = {choices}
-            class=""
-          />
-        )}
+
         <Body playerData={playerData} tab={tab} choices = {choices} setChoices = {setChoices}/>
-      </div>
     </div>
   );
 }

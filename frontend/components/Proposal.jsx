@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, Modal, Container } from "react-bootstrap";
 import Autocomplete from "react-autocomplete";
 var axios = require("axios").default;
-const rawData = require("../data/balancingdata.json");
+const rawData = require("../../frontend/data/balancingdata.json");
 
 export default function Proposal({ active, cancel, save }) {
   const cards = rawData.map((item) => {
@@ -146,8 +146,8 @@ export default function Proposal({ active, cancel, save }) {
               "Part Name": card,
               Attack: attackVal,
               Shield: shieldVal,
-              Desc: desc,
-              Reason: reason,
+              Description: desc ? desc : "",
+              Reason: reason ? reason : "",
             });
           }}
         >

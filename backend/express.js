@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const app = express()
 
-const data = {};
+const data = {proposals: [], votes: []};
 const port = 3001
 const api_key =process.env.API_KEY;
 const roninAcct = '0x3aeB90BfD668cbCF68E6EfF8Fbb9cEFf94A74dB3'
@@ -26,25 +26,32 @@ app.post('/submit', (req, res) => {
     res.send({type: 'error', message: 'Invalid request: missing account or sig'})
     return;
   }
-  if(!req.body.proposals){
+  if(!req.body.data){
     res.send({type: 'error', message: 'Invalid request: no proposals'})
     return;
   }
-  let proposedAcct = ethers.utils.verifyMessage(req.body.proposals, req.body.sig);
+  let proposedAcct = ethers.utils.verifyMessage(req.body.data, req.body.sig);
   if(proposedAcct !== req.body.account){
     res.send({type: 'error', message: 'Invalid digital signature'})
     return;
   }
-  const proposals = JSON.parse(req.body.proposals);
+  const userData = JSON.parse(req.body.data);
+
+  const proposals = userData.proposals;
+  const votes = userData.votes;
+
+  data.votes.filter(elem => elem.acct !== req.body.account);
+
+
   let acctData = {
     number : req.body.account,
   }
 
-  // const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${req.body.account}`);
-  // request.query({"id": req.body.account});
+  const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${req.body.account}`);
+  request.query({"id": req.body.account});
 
-  const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`);
-  request.query({"id": roninAcct});
+  // const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`);
+  // request.query({"id": roninAcct});
   
   request.headers({
     "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
@@ -54,26 +61,27 @@ app.post('/submit', (req, res) => {
   request.end(result => {
     result.error 
     if (result.error) {
-      acctData.elo = 1200
-      acctData.name = "Unknown user"
-      // throw new Error(result.error) 
+      res.send({type : "error", message : "no user found"})
+      return;
     } else {
       acctData.elo = result.body.leaderboard.elo
       acctData.name = result.body.leaderboard.name  
     }
-    Object.keys(proposals).forEach(proposal => {
-      if(!data[proposal]) data[proposal] = [];
-      data[proposal].push({proposal: proposals[proposal], acct: acctData});
+    proposals.forEach(proposal => {
+      data.proposals.push({id: data.proposals.length, data: proposal, acct: acctData});
     })
     
-    console.log(data);
+    votes.forEach((vote) => {
+      data.votes.push({vote: vote, acct: req.body.account})
+    })
+    console.log(JSON.stringify(data));
     res.send({type: "success", message: `${acctData.name} (${acctData.elo}) successfully submitted proposal`})
   });
   
 });
 
-app.post('/getProposalData', (req, res) => {
-  console.log(`req.body: ${JSON.stringify(req.body)}, data: ${data}`)
-  const reqData = req.body.skillName;
-  res.send(data[reqData]);
+app.get('/fetchData', (req, res) => {
+  // console.log(`req.body: ${JSON.stringify(req.body)}, data: ${data}`)
+  // const reqData = req.body.skillName;
+  res.send(data);
 })
