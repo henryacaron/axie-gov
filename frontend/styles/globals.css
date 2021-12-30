@@ -14,3 +14,34 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.hr {
+  margin: 0.25rem 0;
+
+}
+.sidebar {
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 40px;
+}
+#sidebar-wrapper{
+  min-height: 100vh !important;
+  width: 100vw;
+  margin-left: -1rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#page-content-wrapper {
+  min-width: 0;
+  width: 100%;
+}

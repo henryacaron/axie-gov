@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Container, Tabs, Tab } from "react-bootstrap";
+import { Container, Tabs, Tab, Button } from "react-bootstrap";
 import { useWeb3React } from "@web3-react/core";
 import Propose from "../components/Propose";
 import Vote from "../components/Vote";
+import { injected } from "../components/wallet/Connectors";
+
 var axios = require("axios").default;
 
-export default function Body({ playerData }) {
-    const { active, account} = useWeb3React();
-    const [data, setData] = useState();
-    const [choices, setChoices] = useState({})
-    const [currProposals, setCurrProposals] = useState([]);
+export default function Body({ playerData, tab, choices, setChoices }) {
+  const { active, account, activate } = useWeb3React();
+  const [data, setData] = useState();
+  const [choices, setChoices] = useState({});
+  const [currProposals, setCurrProposals] = useState([]);
 
   function addProposal(proposal) {
-    console.log(`proposal: ${proposal}`)
+    console.log(`proposal: ${proposal}`);
     setCurrProposals([...currProposals, proposal]);
-    console.log(`currProposals: ${currProposals}`)
+    console.log(`currProposals: ${currProposals}`);
   }
 
   function newVote(vote) {
-    setChoices({ ...choices, votes: { ...choices.votes, vote } });
+    setChoices({ ...choices, votes: [ ...choices.votes, vote ] });
   }
 
-  const proposalExample = [{
-      "Part Name" : "Anemone",
-      Attack : 65,
-      Defense : 65,
-      Description : "It makes the Axie turn blue",
-      Reason : "Because it would be more fun!"
-  }];
+  function removeVote(vote) {
+    setChoices({ ...choices, votes: [ ...choices.votes, vote ] });
+  }
 
-//   useEffect(() => {
-//     setInterval(() => {
-//         getPrevVotes();
-//     }, 5000);
-//   }, []);
 
+  //   useEffect(() => {
+  //     setInterval(() => {
+  //         getPrevVotes();
+  //     }, 5000);
+  //   }, []);
+  async function connect() {
+    try {
+      const val = await activate(injected);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
   async function getPrevVotes() {
     axios
       .post("http://localhost:3001/getProposalData/")
@@ -42,7 +47,7 @@ export default function Body({ playerData }) {
         if (res.type == "error") {
           alert(`Error: ${res.data}`);
         } else {
-          console.log(`received data`)
+          console.log(`received data`);
           setData(res.data);
         }
       })
@@ -53,36 +58,48 @@ export default function Body({ playerData }) {
 
   return (
     <div>
-      <Container>
-        <h2>Axie Governance</h2>
-        <h4>Propose Changes to Axie Cards</h4>
-      </Container>
       {active ? (
-        <Tabs defaultActiveKey="propose" id="tab-view">
-          <Tab eventKey="propose" title="Propose">
+        <Container className="w-100">
+          {tab == "Propose" ? (
             <Propose
               addProposal={addProposal}
-              prevProposals = {proposalExample}
-              currProposals = {currProposals}
+              currProposals={choices.proposals}
+              prevProposals={[]}
+
             />
-          </Tab>
-          <Tab
-            eventKey="vote"
-            title="Vote"
-            choices={choices}
-            setChoices={newVote}
-            proposals = {data?.proposals}
-            prevVotes = {data?.votes[account]}
-          >
+          ) : (
             <Vote
               playerData={playerData}
-              choices={choices}
-              setChoices={addProposal}
+              choices={choices.votes}
+              addVote={newVote}
+              removeVote = {removeVote}
             />
-          </Tab>
-        </Tabs>
+          )}
+          {
+            <Button
+              disabled={!playerData || !Object.keys(choices).length}
+              className="mt-5"
+              style={{
+                position: "fixed",
+                bottom: "30px",
+                right: "30px",
+                zIndex: "3",
+              }}
+              onClick={() => {
+                sign(choices);
+              }}
+            >
+              Sign and Submit
+            </Button>
+          }
+        </Container>
       ) : (
-        <h3>Connect to Metamask to Continue</h3>
+        <div>
+          <h3>Connect to Metamask to Continue</h3>
+          <Button onClick={connect} className="btn btn-primary">
+            {"Connect to Metamask"}
+          </Button>
+        </div>
       )}
     </div>
   );

@@ -53,7 +53,7 @@ export default function Proposal({ active, cancel, save }) {
           renderItem={(item, highlighted) => (
             <div
               key={item.id}
-              style={{ backgroundColor: highlighted ? "#eee" : "transparent" }}
+              style={{ backgroundColor: highlighted ? "#eee" : "transparent"}}
             >
               {item.label}
             </div>
@@ -62,6 +62,7 @@ export default function Proposal({ active, cancel, save }) {
           onChange={(e) => handleNameChange(e.target.value)}
           onSelect={(value) => handleNameChange(value)}
           inputProps={{ className: "form-control" }}
+          wrapperStyle={{zIndex: 10}}
           // menuStyle = {{width: "50%", padding: "0.375rem, 0.75rem",
           //   fontSize: "1rem",
           //   fontWeight: "400",

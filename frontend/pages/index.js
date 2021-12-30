@@ -1,23 +1,98 @@
 import React, { useState, useEffect } from "react";
-// import '@fortawesome/fontawesome-free/css/all.min.css'; 
-// import 'bootstrap-css-only/css/bootstrap.min.css'; 
-// import 'mdbreact/dist/css/mdb.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useWeb3React } from "@web3-react/core";
 
 import { Container } from "react-bootstrap";
-import Body from "../components/Body"
+import Body from "../components/Body";
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
-  const [playerData, setPlayerData] = useState(undefined);
+  const cs = {
+    proposals: [
+      {
+        "Part Name": "Anemone",
+        Attack: 65,
+        Shield: 65,
+        Description: "It makes the Axie turn blue",
+        Reason: "Because it would be more fun!",
+      },
+      {
+        "Part Name": "Anemone",
+        Attack: 65,
+        Shield: 65,
+        Description: "It makes the Axie turn blue",
+        Reason: "Because it would be more fun!",
+      },
+      {
+        "Part Name": "Anemone",
+        Attack: 65,
+        Shield: 65,
+        Description: "It makes the Axie turn blue",
+        Reason: "Because it would be more fun!",
+      },
+    ],
+    votes: [
+      {
+        "Part Name": "Anemone",
+        mmr: 2100,
+        Attack: "69",
+        Shield: "69",
+        Description: "It would be sick",
+        Reason: "Duh",
+        user: "0xhank",
+        votes: 50,
+      },
+      {
+        "Part Name": "Anemone",
+        mmr: 2101,
+        Attack: "70",
+        Shield: "70",
+        Description: "Idk",
+        Reason: "",
+        user: "Will Robinson",
+        votes: 2,
+      },
+      {
+        "Part Name": "Anemone",
+        mmr: 2101,
+        Attack: "70",
+        Shield: "70",
+        Description: "Idk",
+        Reason: "",
+        user: "Will Robinson",
+        votes: 6,
+      },
+    ],
+  };
 
+  const [playerData, setPlayerData] = useState(undefined);
+  const { account, active, activate, deactivate } = useWeb3React();
+  const [tab, setTab] = useState("Propose");
+  const [choices, setChoices] = useState(cs);
   return (
-    <Container className="d-flex flex-column justify-content-center text-center">
-      <Header playerData={playerData} setPlayerData={setPlayerData} />
-      <br />
-      <br />
-      <br />
-      <Body playerData = {playerData}/>
-    </Container>
+    <div className="w-vw h-vh">
+      <Header
+        playerData={playerData}
+        setPlayerData={setPlayerData}
+        tab={tab}
+        setTab={setTab}
+      />
+      <div style={{ height: "53px" }}></div>
+      <div className="d-flex flex-row">
+        {active && (
+          <Sidebar
+            playerData={playerData}
+            setPlayerData={setPlayerData}
+            choices = {choices}
+            class=""
+          />
+        )}
+        <Body playerData={playerData} tab={tab} choices = {choices} setChoices = {setChoices}/>
+      </div>
+    </div>
   );
 }
