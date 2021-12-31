@@ -9,10 +9,10 @@ export default function Sidebar({ proposals, votes }) {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 bg-light"
+      className="d-flex flex-column flex-shrink-0 p-3 bg-light overflow-y-auto"
       style={{
         width: '250px',
-        height: "100vh - 53px"
+        minHeight: "calc(100vh - 53px)"
       }}
     >
       <div className = "h-50">

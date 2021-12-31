@@ -20,15 +20,15 @@ export default function Propose({ addProposal, currProposals, prevProposals }) {
 
   return (
     <Container className="row mt-3">
-      <h5>Current Proposals</h5>
+      <span class = "fs-5">Current Proposals</span>
       {currProposals.map((item, idx) => {
         return (
-          <Card key={idx} className="col-lg-4 col-sm-6 m-2" style = {{minHeight: "100px"}}>
+          <Card key={idx} className="m-2 shadow-none" style = {{minHeight: "100px"}}>
             <Card.Body>
-              <Card.Title>{item["Part Name"]}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
+            <div className = "fs-5">{item["Part Name"]}</div>
+              <div className="mb-1 text-muted fs-6">
                 Attack: {item.Attack} Shield: {item.Shield}
-              </Card.Subtitle>
+              </div>
               <Card.Text>{item.Description}</Card.Text>
               <Card.Text>{item.Reason}</Card.Text>
 
@@ -43,22 +43,22 @@ export default function Propose({ addProposal, currProposals, prevProposals }) {
       />
       <Card
       role="button"
-        className="col-4 m-2 d-flex justify-content-center align-items-center"
+        className="m-2 d-flex justify-content-center align-items-center shadow-none"
         onClick={() => handleAdd()}
         style={{minHeight: "100px"}}
       >
         <i className="fa fa-plus"></i>
       </Card>
       <hr />
-      <h5>Submitted Proposals</h5>
+      <span class = "fs-5">Submitted Proposals</span>
       {prevProposals?.map((item, idx) => {
         return (
-          <Card key={idx} className="col-4 m-2">
+          <Card key={idx} className="m-2 shadow-none">
             <Card.Body>
-              <Card.Title>{item.data["Part Name"]}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
+              <div className = "fs-5">{item.data["Part Name"]}</div>
+              <div className="mb-1 text-muted fs-6">
                 Attack: {item.data.Attack} Shield: {item.data.Shield}
-              </Card.Subtitle>
+              </div>
               <Card.Text>{item.data.Description}</Card.Text>
             </Card.Body>
           </Card>

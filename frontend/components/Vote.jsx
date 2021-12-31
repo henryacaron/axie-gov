@@ -10,13 +10,13 @@ export default function Vote({ myVotes, proposals, editVote, allVotes }) {
     { label: "Description", field: "Description", sort: "asc", width: 100 },
     { label: "Reason", field: "Reason", sort: "asc", width: 100 },
     { label: "Proposed By", field: "user", sort: "asc", width: 100 },
-    { label: "Votes", field: "votes", sort: "asc", width: 100 },
+    { label: "All Votes", field: "votes", sort: "asc", width: 100 },
   ];
 
   return (
-    <div>
+    <div style = {{padding: "1rem"}}>
       {proposals.length > 0 ? (
-        <Table striped bordered>
+        <Table striped>
           <thead>
             <tr>
               <th>Vote</th>
