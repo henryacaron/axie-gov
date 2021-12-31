@@ -52,11 +52,13 @@ export default function Body({ playerData, tab, choices, setChoices }) {
     setChoices({ ...choices, proposals: [...choices.proposals, proposal] });
   }
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //       getPrevVotes();
-  //   }, 5000);
-  // }, []);
+  useEffect(() => {
+    getPrevVotes();
+    const intervalId = setInterval(() => {
+        getPrevVotes();
+    }, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
   async function connect() {
     try {
       const val = await activate(injected);
@@ -71,7 +73,7 @@ export default function Body({ playerData, tab, choices, setChoices }) {
         if (res.type == "error") {
           alert(`Error: ${res.data}`);
         } else {
-          // console.log(` data : ${res.data}`);
+          console.log(`got data`);
           setData(res.data);
         }
       })
@@ -81,15 +83,14 @@ export default function Body({ playerData, tab, choices, setChoices }) {
   }
 
   return (
-    <div className="d-flex flex-row">
+    <div className="d-flex flex-row" style = {{height: "calc(100vh - 53px)"}}>
       <Sidebar
         proposals={choices.proposals}
         votes={choices.votes}
       />
-      <div className="w-100 overflow-auto">
+      {/* <div style = {{width: "250px"}}></div> */}
         {active ? (
-          <Container>
-            <Button onClick={getPrevVotes}>Fetch Votes</Button>
+          <div className="w-100 overflow-y-scroll" style = {{height: "calc(100vh - 53px)"}}>
             {tab == "Propose" ? (
               <Propose
                 addProposal={addProposal}
@@ -123,7 +124,8 @@ export default function Body({ playerData, tab, choices, setChoices }) {
                 Sign and Submit
               </Button>
             }
-          </Container>
+                      </div>
+
         ) : (
           <Modal
             show={!active}
@@ -141,7 +143,6 @@ export default function Body({ playerData, tab, choices, setChoices }) {
             </Modal.Body>
           </Modal>
         )}
-      </div>
     </div>
   );
 }

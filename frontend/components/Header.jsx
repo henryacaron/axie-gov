@@ -34,44 +34,47 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
   }, [active]);
 
   return (
-    <Navbar
-      className="fixed-top w-100 items-start z-10 bg-light inline-flex"
-      style={{ height: "53px", padding: "0"}}
+    <div
+      className="fixed-top z-10 bg-gray-200 row shadow-none py-0 navbar navbar-light"
+      style={{ height: "53px"}}
     >
-      <div className="col-lg-2 col-md-3">
+      <div className="col-lg-3 col-md-3">
         <strong className="fs-5"> Axie Governance</strong>
       </div>
-      
-      <div
-      role="button"
-        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Vote" ? "border border-primary bg-white" : null}`}
-        onClick={() => setTab("Vote")}
-      >
-        Vote
+      <div className = "col-lg-3 col-md-3 row h-100">
+        <div
+          role="button"
+          className={`p-2 h-100 col-6 d-flex justify-content-center align-items-center ${
+            tab == "Vote" ? "bg-white" : null
+          }`}
+          onClick={() => setTab("Vote")}
+        >
+          Vote
+        </div>
+        <div role="button"
+          className={`p-2 h-100 col-6 d-flex justify-content-center align-items-center ${
+            tab == "Propose" ? "bg-white" : null
+          }`}
+          onClick={() => setTab("Propose")}
+        >
+          Propose
+        </div>
       </div>
       <div
-      role="button"
-        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Propose" ? "border border-primary bg-white" : null}`}
-        onClick={() => setTab("Propose")}
-      >
-        Propose
-      </div> 
-    
-      <div
-        className="d-flex flex-column col-lg-8 col-md-7"
+        className="d-flex flex-column col-lg-6 col-md-6"
         style={{ textAlign: "right" }}
       >
-        <strong className="text-right fs-5 mb-0">
+        <strong className="text-right fs-6 mb-0">
           {active
             ? playerData
               ? `${playerData.leaderboard.name}`
               : "Loading..."
             : ""}{" "}
         </strong>
-        <span className = "mt-0">
+        <span className="mt-0">
           {active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}
         </span>
       </div>
-    </Navbar>
+    </div>
   );
 }
