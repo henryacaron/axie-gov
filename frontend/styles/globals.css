@@ -16,6 +16,20 @@ a {
   box-sizing: border-box;
 }
 
+.bg-gray-700 {
+  background-color: var(--bs-gray-700) !important;
+}
+
+.bg-gray-800 {
+  background-color: var(--bs-gray-800) !important;
+}
+.bg-gray-200 {
+  background-color: var(--bs-gray-200) !important;
+}
+.bg-gray-300 {
+  background-color: var(--bs-gray-300) !important;
+}
+
 .hr {
   margin: -0.75rem 0;
 

@@ -12,7 +12,7 @@ export default function Sidebar({ proposals, votes }) {
       className="d-flex flex-column flex-shrink-0 p-3 bg-light overflow-y-auto"
       style={{
         width: '250px',
-        minHeight: "calc(100vh - 53px)"
+        height: "calc(100vh - 53px)"
       }}
     >
       <div className = "h-50">
@@ -45,7 +45,7 @@ export default function Sidebar({ proposals, votes }) {
         <span className="fs-5">Votes ({votes.length})</span>
         {votes.map((vote, idx) => {
           return (
-            <Container key={idx}>
+            <div key={idx} class= "flex-none border rounded border-dark p-2 m-2">
               {/* {JSON.stringify(vote)} */}
               <div className="d-flex flex-row justify-content-around">
                 <strong>{vote.data["Part Name"]}</strong>
@@ -60,7 +60,7 @@ export default function Sidebar({ proposals, votes }) {
                 {vote.data.Description.slice(0, 30)}
                 {vote.data.Description.length > 30 ? "..." : ""}
               </span>
-            </Container>
+            </div>
           );
         })}
         <hr />

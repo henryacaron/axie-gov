@@ -83,14 +83,14 @@ export default function Body({ playerData, tab, choices, setChoices }) {
   }
 
   return (
-    <div className="d-flex flex-row" style = {{maxHeight: "calc(100vh-53px"}}>
+    <div className="d-flex flex-row" style = {{height: "calc(100vh - 53px)"}}>
       <Sidebar
         proposals={choices.proposals}
         votes={choices.votes}
       />
       {/* <div style = {{width: "250px"}}></div> */}
         {active ? (
-          <div className="w-100 overflow-y-auto">
+          <div className="w-100 overflow-y-scroll" style = {{height: "calc(100vh - 53px)"}}>
             {tab == "Propose" ? (
               <Propose
                 addProposal={addProposal}

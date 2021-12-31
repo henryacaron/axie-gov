@@ -35,13 +35,13 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
 
   return (
     <div
-      className="fixed-top items-start z-10 bg-light row shadow-none py-0 navbar navbar-light"
+      className="fixed-top z-10 bg-gray-200 row shadow-none py-0 navbar navbar-light"
       style={{ height: "53px"}}
     >
-      <div className="col-lg-2 col-md-3">
+      <div className="col-lg-3 col-md-3">
         <strong className="fs-5"> Axie Governance</strong>
       </div>
-      <div className = "col-3 row h-100">
+      <div className = "col-lg-3 col-md-3 row h-100">
         <div
           role="button"
           className={`p-2 h-100 col-6 d-flex justify-content-center align-items-center ${
@@ -61,7 +61,7 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
         </div>
       </div>
       <div
-        className="d-flex flex-column col-lg-7 col-md-6"
+        className="d-flex flex-column col-lg-6 col-md-6"
         style={{ textAlign: "right" }}
       >
         <strong className="text-right fs-6 mb-0">
