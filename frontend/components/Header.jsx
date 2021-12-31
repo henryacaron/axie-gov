@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Navbar, Container, Button } from "react-bootstrap";
-import { injected } from "../components/wallet/Connectors";
+import { Container, Button, Navbar } from "react-bootstrap";
+import { injected } from "./wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
+// import 'styles/nav.css'
 var axios = require("axios").default;
 
-export default function Header({ playerData, setPlayerData }) {
-  const { active, account, library, connector, activate, deactivate } =
-    useWeb3React();
-  const roninAcct = "0x3aeB90BfD668cbCF68E6EfF8Fbb9cEFf94A74dB3";
+export default function Header({ playerData, setPlayerData, tab, setTab }) {
+  const { account, active, activate, deactivate } = useWeb3React();
   const API_KEY = "";
 
   const options = {
     method: "GET",
-    url: `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`,
-    params: { id: roninAcct },
+    url: `https://axie-infinity.p.rapidapi.com/get-update/${account}`,
+    params: { id: account },
     headers: {
       "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
       "x-rapidapi-key": API_KEY,
@@ -22,6 +21,7 @@ export default function Header({ playerData, setPlayerData }) {
   };
 
   useEffect(() => {
+    if (!active) return;
     axios
       .request(options)
       .then(function (response) {
@@ -31,31 +31,47 @@ export default function Header({ playerData, setPlayerData }) {
       .catch(function (error) {
         console.error(error);
       });
-  }, []);
+  }, [active]);
 
-  async function connect() {
-    try {
-      const val = await activate(injected);
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
-  async function disconnect() {
-    try {
-      deactivate();
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
   return (
-    <Navbar className = "d-flex justify-content-between align-items-center p-2 fixed-top" bg="light" fluid="lg">
-          <div className="d-flex flex-column text-primary text-left">
-            <span className = "text-left">{active ? playerData ? `Connected to: ${playerData.leaderboard.name}` : "Loading..." : ""} </span>
-            <span className = "text-left">{active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}</span>
-          </div>
-          <Button onClick={active ? disconnect : connect} className="mr-10">{active? "Disconnect" : "Connect to Metamask"}</Button>
-     
+    <Navbar
+      className="fixed-top w-100 items-start z-10 bg-light inline-flex"
+      style={{ height: "53px", padding: "0"}}
+    >
+      <div className="col-lg-2 col-md-3">
+        <strong className="fs-5"> Axie Governance</strong>
+      </div>
+      
+      <div
+      role="button"
+        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Vote" ? "border border-primary bg-white" : null}`}
+        onClick={() => setTab("Vote")}
+      >
+        Vote
+      </div>
+      <div
+      role="button"
+        className={`p-2 h-100 col-1 d-flex justify-content-center align-items-center ${tab == "Propose" ? "border border-primary bg-white" : null}`}
+        onClick={() => setTab("Propose")}
+      >
+        Propose
+      </div> 
+    
+      <div
+        className="d-flex flex-column col-lg-8 col-md-7"
+        style={{ textAlign: "right" }}
+      >
+        <strong className="text-right fs-5 mb-0">
+          {active
+            ? playerData
+              ? `${playerData.leaderboard.name}`
+              : "Loading..."
+            : ""}{" "}
+        </strong>
+        <span className = "mt-0">
+          {active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}
+        </span>
+      </div>
     </Navbar>
   );
 }

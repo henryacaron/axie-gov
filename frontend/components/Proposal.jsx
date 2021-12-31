@@ -1,112 +1,159 @@
 import { useState, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
-import Question from "./Question";
-import Table from "./Table";
+import { Button, Form, Modal, Container } from "react-bootstrap";
+import Autocomplete from "react-autocomplete";
 var axios = require("axios").default;
+const rawData = require("../../frontend/data/balancingdata.json");
 
-export default function Proposal({ qData, choice, setChoice }) {
-  const [headers, setHeaders] = useState(undefined);
-  const [rows, setRows] = useState(undefined);
-  const [consensusAttack, setConsensusAttack] = useState(undefined);
-  const [consensusShield, setConsensusShield] = useState(undefined);
+export default function Proposal({ active, cancel, save }) {
+  const cards = rawData.map((item) => {
+    return { id: item["Part Name"], label: item["Part Name"] };
+  });
+  const [card, setCard] = useState("");
+  const [currCard, setCurrCard] = useState();
+  const [attackVal, setAttackVal] = useState();
+  const [shieldVal, setShieldVal] = useState();
+  const [desc, setDesc] = useState();
+  const [reason, setReason] = useState();
 
-  useEffect(() => {
-    getProposalData(qData["Part Name"]);
-  }, []);
-
-  async function getProposalData(skillName) {
-    axios
-      .post("http://localhost:3001/getProposalData/", { skillName: skillName })
-      .then((res) => {
-        if (res.type == "error") {
-          alert(`Error: ${res.data}`);
-        } else {
-          organizeData(res.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+  function handleNameChange(value) {
+    const match = rawData.find((item) => value == item["Part Name"]);
+    setCurrCard(match);
+    setAttackVal(match ? match.Attack : undefined);
+    setShieldVal(match ? match.Shield : undefined);
+    setCard(value);
   }
 
-  function organizeData(data) {
-    if (!data) return;
-    let columns = [
-      { title: "Name", field: "name" },
-      { title: "Elo", field: "elo" },
-      { title: "Attack", field: "attack" },
-      { title: "Shield", field: "shield" },
-    ];
-
-    let rowData = [];
-    let totalElo = 0;
-    let weightedShield = 0;
-    let weightedAttack = 0;
-    data.forEach((item) => {
-      console.log(`item: ${JSON.stringify(item)}`);
-      rowData.push({
-        name: item.acct.name,
-        elo: item.acct.elo,
-        attack: item.proposal.Attack,
-        shield: item.proposal.Shield,
-      });
-      weightedShield += item.proposal.Shield * item.acct.elo;
-      totalElo += item.acct.elo;
-      weightedAttack += item.proposal.Attack * item.acct.elo;
-    });
-    console.log(
-      `weightedShield: ${weightedShield}`,
-      `weightedAttack: ${weightedAttack}`,
-      `totalElo: ${totalElo}`
-    );
-
-    setHeaders(columns);
-    setRows(rowData);
-    setConsensusAttack(weightedAttack / totalElo);
-    setConsensusShield(weightedShield / totalElo);
+  function clear() {
+    setCard("")
+    setCurrCard(undefined)
+    setAttackVal(undefined)
+    setShieldVal(undefined)
+    setDesc(undefined)
+    setReason(undefined);
   }
-
   return (
-    <Container className="row">
-      <Container className="col-lg-7">
-        <h3>Cast Your Vote</h3>
-        <Question
-          qData={qData}
-          setChoice={setChoice}
-          choice={choice?.Shield}
-          attr="Shield"
-        />
-        <hr />
-        <Question
-          qData={qData}
-          setChoice={setChoice}
-          choice={choice?.Attack}
-          attr="Attack"
-        />
-        <hr/>
-      </Container>
-      <Container className = "col-lg-5">
-        <h3>Voting Summary</h3>
-        {rows ? (
-          <Container>
-            <Container className="row">
-              <span className = "col-lg-4">Number of Voters: {rows.length}</span>
-              <span className = "col-lg-4">
-                Consensus Attack Proposal: {Math.round(consensusAttack)}
-              </span>
-              <span className = "col-lg-4">
-                Consensus Shield Proposal: {Math.round(consensusShield)}
-              </span>
-              <hr />
-            </Container>
-            <h3>Previous Votes</h3>
+    <Modal
+      show={active}
+      aria-labelledby="contained-modal-title-vcenter"
+      style={{ display: "block", overflow: "auto" }}
+    >
+      <Modal.Header>
+        <Modal.Title>Create Proposal</Modal.Title>
+      </Modal.Header>
 
-            <Table headers={headers} data={rows} />
-          </Container>
-        ) : (
-          <h5>No Previous Proposals</h5>
-        )}
+      <Container className="d-flex flex-column justify-content-center">
+        <Form.Text id="card">Choose a Card</Form.Text>
+
+        <Autocomplete
+          items={cards}
+          shouldItemRender={(item, val) =>
+            item.label.toLowerCase().includes(val.toLowerCase())
+          }
+          getItemValue={(item) => item.label}
+          renderItem={(item, highlighted) => (
+            <div
+              key={item.id}
+              style={{ backgroundColor: highlighted ? "#eee" : "transparent"}}
+            >
+              {item.label}
+            </div>
+          )}
+          value={card}
+          onChange={(e) => handleNameChange(e.target.value)}
+          onSelect={(value) => handleNameChange(value)}
+          inputProps={{ className: "form-control" }}
+          wrapperStyle={{zIndex: 10}}
+          // menuStyle = {{width: "50%", padding: "0.375rem, 0.75rem",
+          //   fontSize: "1rem",
+          //   fontWeight: "400",
+          //   lineHeight: "1.5",
+          //   color: "#212529",
+          //   backgroundColor: "#fff",
+          //   backgroundClip: "padding-box",
+          //   border: "1px solid #ced4da",
+          //   borderRadius: "0.25rem",
+          // }}
+        />
+        <br />
+        <Form.Text id="attack">Change Attack</Form.Text>
+        <div className="row">
+          <span className="col-2 d-flex justify-content-center">
+            {attackVal}
+          </span>
+          <div className="col-10">
+            <Form.Range
+              disabled={!currCard}
+              value={attackVal ? attackVal : "5"}
+              min={currCard ? `${currCard.Attack - 20}` : "0"}
+              max={currCard ? `${currCard.Attack + 20}` : "10"}
+              onChange={(e) => setAttackVal(e.target.value)}
+              step={"5"}
+            />
+          </div>
+        </div>
+        <Form.Text id="shield">Change Shield</Form.Text>
+        <div className="row">
+          <span className="col-2 d-flex justify-content-center">
+            {shieldVal}
+          </span>
+          <div className="col-10">
+            <Form.Range
+              disabled={!currCard}
+              value={shieldVal ? shieldVal : "5"}
+              min={currCard ? `${currCard.Shield - 20}` : "0"}
+              max={currCard ? `${currCard.Shield + 20}` : "10"}
+              onChange={(e) => setShieldVal(e.target.value)}
+              step={"5"}
+            />
+          </div>
+        </div>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Label>Describe additional changes</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            disabled={!currCard}
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Label>Why is this change necessary?</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            disabled={!currCard}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+        </Form.Group>
       </Container>
-    </Container>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            clear();
+            cancel(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            clear();
+            save({
+              "Part Name": card,
+              Attack: attackVal,
+              Shield: shieldVal,
+              Description: desc ? desc : "",
+              Reason: reason ? reason : "",
+            });
+          }}
+        >
+          Save and Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
