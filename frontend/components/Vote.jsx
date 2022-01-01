@@ -17,7 +17,7 @@ export default function Vote({ myVotes, proposals, editVote, allVotes }) {
     <div style = {{padding: "1rem"}}>
       {proposals.length > 0 ? (
         <Table striped>
-          <thead>
+          <thead style = {{position: "sticky"}}>
             <tr>
               <th>Vote</th>
 

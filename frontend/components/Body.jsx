@@ -12,21 +12,8 @@ export default function Body({ playerData, tab, choices, setChoices }) {
   const { active, account, activate, library } = useWeb3React();
   const [data, setData] = useState({ proposals: [], votes: [] });
 
-  function editVote(vote) {
-    const existingVote = choices.votes.some((aVote) => vote.id == aVote.id);
-    // const existingVote = true;
-    console.log(JSON.stringify(choices))
-    setChoices({
-      ...choices,
-      votes: existingVote
-        ? choices.votes.filter(aVote => aVote.id !== vote.id)
-        : [...choices.votes, vote],
-    });
-    console.log(vote)
-  }
-
   async function sign() {
-    let msgString = JSON.stringify({proposals : choices.proposals, votes: choices.votes.map(item => item.id)})
+    let msgString = JSON.stringify({proposals : choices.proposals.map(proposal => proposal.data), votes: choices.votes.map(item => item.id)})
     const signer = library.getSigner();
     const sig = await signer.signMessage(msgString);
 
@@ -47,9 +34,28 @@ export default function Body({ playerData, tab, choices, setChoices }) {
     setChoices({ proposals: [], votes: [] });
   }
 
-  function addProposal(proposal) {
+  function editProposals(proposal) {
+    const existingProp = choices.votes.some((aProposal) => proposal.id == aProposal.id);
     console.log(`proposal: ${proposal}`);
+    setChoices({
+      ...choices,
+      proposals: existingProp
+        ? choices.proposals.filter(aProposal => proposal.id !== aProposal.id)
+        : [...choices.votes, proposal],
+    });
     setChoices({ ...choices, proposals: [...choices.proposals, proposal] });
+  }
+
+  function editVotes(vote) {
+    const existingVote = choices.votes.some((aVote) => vote.id == aVote.id);
+    console.log(JSON.stringify(choices))
+    setChoices({
+      ...choices,
+      votes: existingVote
+        ? choices.votes.filter(aVote => aVote.id !== vote.id)
+        : [...choices.votes, vote],
+    });
+    console.log(vote)
   }
 
   useEffect(() => {
@@ -85,7 +91,9 @@ export default function Body({ playerData, tab, choices, setChoices }) {
   return (
     <div className="d-flex flex-row" style = {{height: "calc(100vh - 53px)"}}>
       <Sidebar
-        proposals={choices.proposals}
+        proposals={choices.proposals.concat(data.proposals.filter(
+          (proposal) => proposal.acct.number == account
+        ))}
         votes={choices.votes}
       />
       {/* <div style = {{width: "250px"}}></div> */}
@@ -93,7 +101,7 @@ export default function Body({ playerData, tab, choices, setChoices }) {
           <div className="w-100 overflow-y-scroll" style = {{height: "calc(100vh - 53px)"}}>
             {tab == "Propose" ? (
               <Propose
-                addProposal={addProposal}
+                addProposal={editProposals}
                 currProposals={choices.proposals}
                 prevProposals={data.proposals.filter(
                   (proposal) => proposal.acct.number == account
@@ -102,7 +110,7 @@ export default function Body({ playerData, tab, choices, setChoices }) {
             ) : (
               <Vote
                 myVotes={choices.votes}
-                editVote={editVote}
+                editVote={editVotes}
                 proposals={data.proposals}
                 allVotes={data.votes}
               />
