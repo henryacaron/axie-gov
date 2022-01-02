@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Container, Button, Navbar } from "react-bootstrap";
+import { Spinner, Button, Navbar } from "react-bootstrap";
 import { injected } from "./wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 // import 'styles/nav.css'
@@ -8,40 +8,36 @@ var axios = require("axios").default;
 
 export default function Header({ playerData, setPlayerData, tab, setTab }) {
   const { account, active, activate, deactivate } = useWeb3React();
-  const API_KEY = "";
-
-  const options = {
-    method: "GET",
-    url: `https://axie-infinity.p.rapidapi.com/get-update/${account}`,
-    params: { id: account },
-    headers: {
-      "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
-      "x-rapidapi-key": API_KEY,
-    },
-  };
 
   useEffect(() => {
     if (!active) return;
     axios
-      .request(options)
-      .then(function (response) {
-        // console.log(response.data);
-        setPlayerData(response.data);
+      .post("http://localhost:3001/playerData/", {
+        account: account,
       })
-      .catch(function (error) {
-        console.error(error);
+      .then((res) => {
+        if (res.type == "error") {
+          alert(`Error: ${res.data}`);
+        } else {
+          console.log(res.data.message.body)
+          setPlayerData(res.data.message.body);
+
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [active]);
 
   return (
     <div
       className="fixed-top z-10 bg-gray-200 row shadow-none py-0 navbar navbar-light"
-      style={{ height: "53px"}}
+      style={{ height: "53px" }}
     >
       <div className="col-lg-3 col-md-3">
         <strong className="fs-5"> Axie Governance</strong>
       </div>
-      <div className = "col-lg-3 col-md-3 row h-100">
+      <div className="col-lg-3 col-md-3 row h-100">
         <div
           role="button"
           className={`p-2 h-100 col-6 d-flex justify-content-center align-items-center ${
@@ -51,7 +47,8 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
         >
           Vote
         </div>
-        <div role="button"
+        <div
+          role="button"
           className={`p-2 h-100 col-6 d-flex justify-content-center align-items-center ${
             tab == "Propose" ? "bg-white" : null
           }`}
@@ -65,11 +62,12 @@ export default function Header({ playerData, setPlayerData, tab, setTab }) {
         style={{ textAlign: "right" }}
       >
         <strong className="text-right fs-6 mb-0">
-          {active
-            ? playerData
+          { playerData ?  playerData.leaderboard
               ? `${playerData.leaderboard.name}`
-              : "Loading..."
-            : ""}{" "}
+              : <h5 className = "text-danger">!</h5>
+            : <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>}{" "}
         </strong>
         <span className="mt-0">
           {active && playerData ? `Elo: ${playerData.leaderboard.elo}` : ""}

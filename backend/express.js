@@ -18,9 +18,33 @@ app.listen(port, () => {
   console.log(`api key: ${process.env.API_KEY}`)
 })
 
-async function getPlayerData(account) {
+app.post('/playerData', (req, res) => {
+  if(!req.body.account){
+    res.send({type: 'error', message: 'Invalid request: missing account or sig'})
+    return;
+  }
+  const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${req.body.account}`);
+  request.query({"id": req.body.account});
 
-}
+  // const request = unirest("GET", `https://axie-infinity.p.rapidapi.com/get-update/${roninAcct}`);
+  // request.query({"id": roninAcct});
+  
+  request.headers({
+    "x-rapidapi-host": "axie-infinity.p.rapidapi.com",
+    "x-rapidapi-key": api_key,
+    "useQueryString": true
+  });  
+  request.end(result => {
+    result.error 
+    if (result.error) {
+      res.send({type : "error", message : "no user found"})
+      return;
+    } else {
+      res.send({type: "success", message : result})
+    }
+  })
+
+})
 app.post('/submit', (req, res) => {
   if(!req.body.account || !req.body.sig){
     res.send({type: 'error', message: 'Invalid request: missing account or sig'})
